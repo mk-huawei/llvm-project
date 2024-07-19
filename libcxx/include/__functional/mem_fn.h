@@ -38,8 +38,8 @@ public:
   template <class... _ArgTypes>
   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX20
 
-  typename __invoke_return<type, _ArgTypes...>::type
-  operator()(_ArgTypes&&... __args) const {
+  enable_if_t<__invokable<type, _ArgTypes...>::value, typename __invoke_return<type, _ArgTypes...>::type>
+  operator()(_ArgTypes&&... __args) const noexcept(noexcept(std::__invoke(__f_, std::forward<_ArgTypes>(__args)...))) {
     return std::__invoke(__f_, std::forward<_ArgTypes>(__args)...);
   }
 };

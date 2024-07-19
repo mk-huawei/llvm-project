@@ -21,6 +21,7 @@ struct A
     TEST_CONSTEXPR_CXX14 char test0() {return 'a';}
     TEST_CONSTEXPR_CXX14 char test1(int) {return 'b';}
     TEST_CONSTEXPR_CXX14 char test2(int, double) {return 'c';}
+    TEST_CONSTEXPR_CXX14 char test3() noexcept {return 'a';}
 };
 
 template <class F>
@@ -34,6 +35,9 @@ test0(F f)
     assert(f(ap) == 'a');
     const F& cf = f;
     assert(cf(ap) == 'a');
+
+    static_assert(!std::is_invocable<F, int, int, int>::value, "");
+    static_assert( std::is_invocable<F, A&>::value, "");
     }
     return true;
 }
@@ -76,12 +80,25 @@ int main(int, char**)
 #if TEST_STD_VER >= 11
     static_assert((noexcept(std::mem_fn(&A::test0))), ""); // LWG#2489
 #endif
+    static_assert(!(noexcept(std::mem_fn(&A::test0)(std::declval<A&>()))), "");
+    static_assert((noexcept(std::mem_fn(&A::test3)(std::declval<A&>()))), "");
 
 #if TEST_STD_VER >= 20
     static_assert(test0(std::mem_fn(&A::test0)));
     static_assert(test1(std::mem_fn(&A::test1)));
     static_assert(test2(std::mem_fn(&A::test2)));
 #endif
+
+  // Make sure memfn's operator() is SFINAE-friendly
+  {
+    static_assert(!std::is_invocable<decltype(std::mem_fn(&A::test0))>::value);
+    static_assert( std::is_invocable<decltype(std::mem_fn(&A::test0)), A&>::value);
+    static_assert(!std::is_nothrow_invocable<decltype(std::mem_fn(&A::test0)), A&>::value);
+
+    static_assert(!std::is_nothrow_invocable<decltype(std::mem_fn(&A::test3))>::value);
+    static_assert( std::is_invocable<decltype(std::mem_fn(&A::test3)), A&>::value);
+    static_assert( std::is_nothrow_invocable<decltype(std::mem_fn(&A::test3)), A&>::value);
+  }
 
     return 0;
 }
