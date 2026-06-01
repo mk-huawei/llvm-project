@@ -70,7 +70,7 @@
 `3506 <https://wg21.link/LWG3506>`__,"Missing allocator-extended constructors for ``priority_queue``","June 2021","|Complete|","14.0",""
 `3517 <https://wg21.link/LWG3517>`__,"``join_view::iterator``'s ``iter_swap`` is underconstrained","June 2021","|Complete|","14.0","|ranges|"
 `3518 <https://wg21.link/LWG3518>`__,"Exception requirements on char trait operations unclear","June 2021","|Nothing To Do|","",""
-`3519 <https://wg21.link/LWG3519>`__,"Incomplete synopses for ``<random>`` classes","June 2021","",""
+`3519 <https://wg21.link/LWG3519>`__,"Incomplete synopses for ``<random>`` classes","June 2021","","",""
 `3520 <https://wg21.link/LWG3520>`__,"``iter_move`` and ``iter_swap`` are inconsistent for ``transform_view::iterator``","June 2021","|Complete|","14.0","|ranges|"
 `3521 <https://wg21.link/LWG3521>`__,"Overly strict requirements on ``qsort`` and ``bsearch``","June 2021","|Nothing To Do|","",""
 `3522 <https://wg21.link/LWG3522>`__,"Missing requirement on ``InputIterator`` template parameter for ``priority_queue`` constructors","June 2021","|Complete|","14.0",""
