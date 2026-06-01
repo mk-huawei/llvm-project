@@ -10,6 +10,8 @@
 #define _LIBCPP___TYPE_TRAITS_STRIP_SIGNATURE_H
 
 #include <__config>
+#include <__type_traits/is_same.h>
+#include <__type_traits/remove_cvref.h>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
 #  pragma GCC system_header
@@ -19,60 +21,76 @@
 
 _LIBCPP_BEGIN_NAMESPACE_STD
 
-template <class _Fp>
+template <class _Cp, class _Fp>
 struct __strip_signature;
 
 #  if defined(__cpp_static_call_operator) && __cpp_static_call_operator >= 202207L
 
-template <class _Rp, class... _Args>
-struct __strip_signature<_Rp (*)(_Args...)> {
-  using type = _Rp(_Args...);
+template <class _Cp, class _Rp, class... _Args>
+struct __strip_signature<_Cp, _Rp (*)(_Args...)> {
+  using type _LIBCPP_NODEBUG = _Rp(_Args...);
 };
 
-template <class _Rp, class... _Args>
-struct __strip_signature<_Rp (*)(_Args...) noexcept> {
-  using type = _Rp(_Args...);
+template <class _Cp, class _Rp, class... _Args>
+struct __strip_signature<_Cp, _Rp (*)(_Args...) noexcept> {
+  using type _LIBCPP_NODEBUG = _Rp(_Args...);
 };
 
 #  endif // defined(__cpp_static_call_operator) && __cpp_static_call_operator >= 202207L
 
 // clang-format off
-template<class _Rp, class _Gp, class ..._Ap>
-struct __strip_signature<_Rp (_Gp::*) (_Ap...)> { using type = _Rp(_Ap...); };
-template<class _Rp, class _Gp, class ..._Ap>
-struct __strip_signature<_Rp (_Gp::*) (_Ap...) const> { using type = _Rp(_Ap...); };
-template<class _Rp, class _Gp, class ..._Ap>
-struct __strip_signature<_Rp (_Gp::*) (_Ap...) volatile> { using type = _Rp(_Ap...); };
-template<class _Rp, class _Gp, class ..._Ap>
-struct __strip_signature<_Rp (_Gp::*) (_Ap...) const volatile> { using type = _Rp(_Ap...); };
+template<class _Cp, class _Rp, class _Gp, class ..._Ap>
+struct __strip_signature<_Cp, _Rp (_Gp::*) (_Ap...)> { using type _LIBCPP_NODEBUG = _Rp(_Ap...); };
+template<class _Cp, class _Rp, class _Gp, class ..._Ap>
+struct __strip_signature<_Cp, _Rp (_Gp::*) (_Ap...) const> { using type _LIBCPP_NODEBUG = _Rp(_Ap...); };
+template<class _Cp, class _Rp, class _Gp, class ..._Ap>
+struct __strip_signature<_Cp, _Rp (_Gp::*) (_Ap...) volatile> { using type _LIBCPP_NODEBUG = _Rp(_Ap...); };
+template<class _Cp, class _Rp, class _Gp, class ..._Ap>
+struct __strip_signature<_Cp, _Rp (_Gp::*) (_Ap...) const volatile> { using type _LIBCPP_NODEBUG = _Rp(_Ap...); };
 
-template<class _Rp, class _Gp, class ..._Ap>
-struct __strip_signature<_Rp (_Gp::*) (_Ap...) &> { using type = _Rp(_Ap...); };
-template<class _Rp, class _Gp, class ..._Ap>
-struct __strip_signature<_Rp (_Gp::*) (_Ap...) const &> { using type = _Rp(_Ap...); };
-template<class _Rp, class _Gp, class ..._Ap>
-struct __strip_signature<_Rp (_Gp::*) (_Ap...) volatile &> { using type = _Rp(_Ap...); };
-template<class _Rp, class _Gp, class ..._Ap>
-struct __strip_signature<_Rp (_Gp::*) (_Ap...) const volatile &> { using type = _Rp(_Ap...); };
+template<class _Cp, class _Rp, class _Gp, class ..._Ap>
+struct __strip_signature<_Cp, _Rp (_Gp::*) (_Ap...) &> { using type _LIBCPP_NODEBUG = _Rp(_Ap...); };
+template<class _Cp, class _Rp, class _Gp, class ..._Ap>
+struct __strip_signature<_Cp, _Rp (_Gp::*) (_Ap...) const &> { using type _LIBCPP_NODEBUG = _Rp(_Ap...); };
+template<class _Cp, class _Rp, class _Gp, class ..._Ap>
+struct __strip_signature<_Cp, _Rp (_Gp::*) (_Ap...) volatile &> { using type _LIBCPP_NODEBUG = _Rp(_Ap...); };
+template<class _Cp, class _Rp, class _Gp, class ..._Ap>
+struct __strip_signature<_Cp, _Rp (_Gp::*) (_Ap...) const volatile &> { using type _LIBCPP_NODEBUG = _Rp(_Ap...); };
 
-template<class _Rp, class _Gp, class ..._Ap>
-struct __strip_signature<_Rp (_Gp::*) (_Ap...) noexcept> { using type = _Rp(_Ap...); };
-template<class _Rp, class _Gp, class ..._Ap>
-struct __strip_signature<_Rp (_Gp::*) (_Ap...) const noexcept> { using type = _Rp(_Ap...); };
-template<class _Rp, class _Gp, class ..._Ap>
-struct __strip_signature<_Rp (_Gp::*) (_Ap...) volatile noexcept> { using type = _Rp(_Ap...); };
-template<class _Rp, class _Gp, class ..._Ap>
-struct __strip_signature<_Rp (_Gp::*) (_Ap...) const volatile noexcept> { using type = _Rp(_Ap...); };
+template<class _Cp, class _Rp, class _Gp, class ..._Ap>
+struct __strip_signature<_Cp, _Rp (_Gp::*) (_Ap...) noexcept> { using type _LIBCPP_NODEBUG = _Rp(_Ap...); };
+template<class _Cp, class _Rp, class _Gp, class ..._Ap>
+struct __strip_signature<_Cp, _Rp (_Gp::*) (_Ap...) const noexcept> { using type _LIBCPP_NODEBUG = _Rp(_Ap...); };
+template<class _Cp, class _Rp, class _Gp, class ..._Ap>
+struct __strip_signature<_Cp, _Rp (_Gp::*) (_Ap...) volatile noexcept> { using type _LIBCPP_NODEBUG = _Rp(_Ap...); };
+template<class _Cp, class _Rp, class _Gp, class ..._Ap>
+struct __strip_signature<_Cp, _Rp (_Gp::*) (_Ap...) const volatile noexcept> { using type _LIBCPP_NODEBUG = _Rp(_Ap...); };
 
-template<class _Rp, class _Gp, class ..._Ap>
-struct __strip_signature<_Rp (_Gp::*) (_Ap...) & noexcept> { using type = _Rp(_Ap...); };
-template<class _Rp, class _Gp, class ..._Ap>
-struct __strip_signature<_Rp (_Gp::*) (_Ap...) const & noexcept> { using type = _Rp(_Ap...); };
-template<class _Rp, class _Gp, class ..._Ap>
-struct __strip_signature<_Rp (_Gp::*) (_Ap...) volatile & noexcept> { using type = _Rp(_Ap...); };
-template<class _Rp, class _Gp, class ..._Ap>
-struct __strip_signature<_Rp (_Gp::*) (_Ap...) const volatile & noexcept> { using type = _Rp(_Ap...); };
+template<class _Cp, class _Rp, class _Gp, class ..._Ap>
+struct __strip_signature<_Cp, _Rp (_Gp::*) (_Ap...) & noexcept> { using type _LIBCPP_NODEBUG = _Rp(_Ap...); };
+template<class _Cp, class _Rp, class _Gp, class ..._Ap>
+struct __strip_signature<_Cp, _Rp (_Gp::*) (_Ap...) const & noexcept> { using type _LIBCPP_NODEBUG = _Rp(_Ap...); };
+template<class _Cp, class _Rp, class _Gp, class ..._Ap>
+struct __strip_signature<_Cp, _Rp (_Gp::*) (_Ap...) volatile & noexcept> { using type _LIBCPP_NODEBUG = _Rp(_Ap...); };
+template<class _Cp, class _Rp, class _Gp, class ..._Ap>
+struct __strip_signature<_Cp, _Rp (_Gp::*) (_Ap...) const volatile & noexcept> { using type _LIBCPP_NODEBUG = _Rp(_Ap...); };
 // clang-format on
+
+#  if _LIBCPP_STD_VER >= 23
+template <class _Cp, class _Rp, class _Gp, class... _Ap>
+  requires _IsSame<_Cp, __remove_cvref_t<_Gp>>::value
+struct __strip_signature<_Cp, _Rp (*)(_Gp, _Ap...)> {
+  using type _LIBCPP_NODEBUG = _Rp(_Ap...);
+};
+template <class _Cp, class _Rp, class _Gp, class... _Ap>
+  requires _IsSame<_Cp, __remove_cvref_t<_Gp>>::value
+struct __strip_signature<_Cp, _Rp (*)(_Gp, _Ap...) noexcept> {
+  using type _LIBCPP_NODEBUG = _Rp(_Ap...);
+};
+#  endif // _LIBCPP_STD_VER >= 23
+
+template <class _Cp, class _Fp>
+using __strip_signature_t _LIBCPP_NODEBUG = typename __strip_signature<_Cp, _Fp>::type;
 
 _LIBCPP_END_NAMESPACE_STD
 
