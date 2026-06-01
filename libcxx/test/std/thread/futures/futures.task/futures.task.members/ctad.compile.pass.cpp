@@ -36,7 +36,7 @@ static_assert(std::is_same_v<decltype(std::packaged_task{CallableC<false>{}}), s
 
 template <bool Noexcept>
 struct CallableV {
-  int operator()(char*) const noexcept(Noexcept);
+  int operator()(char*) volatile noexcept(Noexcept);
 };
 static_assert(std::is_same_v<decltype(std::packaged_task{CallableV<true>{}}), std::packaged_task<int(char*)>>);
 static_assert(std::is_same_v<decltype(std::packaged_task{CallableV<false>{}}), std::packaged_task<int(char*)>>);
@@ -64,7 +64,7 @@ static_assert(std::is_same_v<decltype(std::packaged_task{CallableCL<false>{}}), 
 
 template <bool Noexcept>
 struct CallableVL {
-  int operator()(char*) const noexcept(Noexcept);
+  int operator()(char*) volatile & noexcept(Noexcept);
 };
 static_assert(std::is_same_v<decltype(std::packaged_task{CallableVL<true>{}}), std::packaged_task<int(char*)>>);
 static_assert(std::is_same_v<decltype(std::packaged_task{CallableVL<false>{}}), std::packaged_task<int(char*)>>);
