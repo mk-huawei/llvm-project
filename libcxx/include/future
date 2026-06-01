@@ -1737,7 +1737,7 @@ public:
 template <class _Rp, class... _Args>
 packaged_task(_Rp (*)(_Args...)) -> packaged_task<_Rp(_Args...)>;
 
-template <class _Fp, class _Stripped = typename __strip_signature<decltype(&_Fp::operator())>::type>
+template <class _Fp, class _Stripped = typename __strip_signature<_Fp, decltype(&_Fp::operator())>::type>
 packaged_task(_Fp) -> packaged_task<_Stripped>;
 
 #endif
