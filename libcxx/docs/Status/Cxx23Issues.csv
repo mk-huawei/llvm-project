@@ -161,7 +161,7 @@
 "","","","","",""
 "`3564 <https://wg21.link/LWG3564>`__","``transform_view::iterator<true>::value_type`` and ``iterator_category`` should use ``const F&``","July 2022","","","|ranges|"
 "`3617 <https://wg21.link/LWG3617>`__","``function``/``packaged_task`` deduction guides and deducing ``this``","July 2022","|Complete|","23.0",""
-"`3656 <https://wg21.link/LWG3656>`__","Inconsistent bit operations returning a count","July 2022","|Complete|","15.0","",""
+"`3656 <https://wg21.link/LWG3656>`__","Inconsistent bit operations returning a count","July 2022","|Complete|","15.0",""
 "`3659 <https://wg21.link/LWG3659>`__","Consider ``ATOMIC_FLAG_INIT`` undeprecation","July 2022","|Complete|","15.0",""
 "`3670 <https://wg21.link/LWG3670>`__","``Cpp17InputIterators`` don't have integer-class difference types","July 2022","","","|ranges|"
 "`3671 <https://wg21.link/LWG3671>`__","``atomic_fetch_xor`` missing from ``stdatomic.h``","July 2022","","",""
